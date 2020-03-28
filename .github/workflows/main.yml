@@ -22,7 +22,7 @@ jobs:
         run: |
           git config --local user.email "${{ secrets.MY_EMAIL }}"
           git config --local user.name "${{ secrets.MY_NAME }}"
-          git add recap_calcolo.pdf
+          git add -f recap_calcolo.pdf
           git commit -m "PDF compilato automaticamente" 
       - name: Push changes
         uses: ad-m/github-push-action@master
