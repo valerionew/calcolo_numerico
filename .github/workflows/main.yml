@@ -12,7 +12,7 @@ jobs:
         with:
           ref: master
       - name: Compile LaTeX document
-        uses: dante-ev/latex-action@master
+        uses: xu-cheng/latex-action@master
         with:
           root_file: recap_calcolo.tex
       - name: Check pdf file
