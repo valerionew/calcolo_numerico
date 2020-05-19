@@ -41,6 +41,8 @@ Vi = @(t) sin(2*pi*w*t);
 
 f = @(t,y) RLC_model(t, y, C, R1, R2, L, Vi);
 
+load y_ex.mat;
+
 %% Eulero in avanti
 
 y_fe(:,1) = [0;0];
@@ -55,6 +57,15 @@ for ii = 1:numel(t)-1
     BE = @(x)  y_be(:,ii) + h .* f(t(ii+1),x) - x;
     y_be(:,ii+1) = fsolve(BE, y_be(:,ii),options);
 end
+
+%% Crank-Nicholson
+
+y_cn(:,1) = [0;0];
+for ii = 1:numel(t)-1
+    CN = @(x)  y_cn(:,ii) + (h/2) .* (f(t(ii+1),y_cn(:,ii))+ f(t(ii+1),x)) - x;
+    y_cn(:,ii+1) = fsolve(CN, y_cn(:,ii),options);
+end
+
 
 %% BDF3
 % risolta tramite BDF3 - pag 345 Quarteroni
@@ -74,16 +85,17 @@ end
 
 [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
 
-
 %% Plot
-figure(2);
+figure(1);
 hold on
-% plot(t,y_fe(1,:));
+plot(t_ex,y_ex);
+plot(t,y_fe(1,:));
 plot(t,y_be(1,:));
+plot(t,y_cn(1,:));
 plot(t,y_BDF3(1,:));
 plot(t_ode15s,y_ode15s(:,1));
 ylim([-0.2 0.3])
-title("RLC filter - stiff system");
-legend('Forward euler','Backwards euler','BDF3', 'ode15s')
+title("RLC filter - stiff system - BDF3 priming still to do right");
+legend('exact','Forward euler','Backwards euler','Crank-Nicholson','BDF3', 'ode15s')
 
 
