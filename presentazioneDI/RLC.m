@@ -19,10 +19,10 @@ h = (tend-tstart)/nstep
 % 
 % Poco stiff
 % lambda = [-100, -1000]
-C = 1e-4;
-R1 = 1e3;
-R2 = 1e2;
-L = 1;
+% C = 1e-4;
+% R1 = 1e3;
+% R2 = 1e2;
+% L = 1;
 
 % Molto stiff
 % lambda = [-2, -1e6]
@@ -44,8 +44,6 @@ D * h
 
 % procediamo con la diagonalizzata e poi riconvertiremo i risultati nelle
 % incognite di A
-
-Z(:,1) = V * [1; 1];
 
 for i = 1:nstep-1
     Z(:,i+1) = Z(:,i) + h * D * Z(:,i);   
