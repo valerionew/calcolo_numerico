@@ -8,10 +8,12 @@
 format longe;
 close all;
 clear all;
+
+options = optimset('Display','off');
 %% Parametri di simulazione
 tstart = 0;
-tend = 1;
-nstep = 1e4;
+tend = 0.1;
+nstep = 500;
 t = linspace(tstart, tend, nstep);
 h = (tend-tstart)/nstep
 
@@ -19,45 +21,69 @@ h = (tend-tstart)/nstep
 % 
 % Poco stiff
 % lambda = [-100, -1000]
-% C = 1e-4;
-% R1 = 1e3;
-% R2 = 1e2;
-% L = 1;
+% C = 7.6e-4;
+% R1 = 20;
+% R2 = 1e3;
+% L = 67e-3;
 
 % Molto stiff
-% lambda = [-2, -1e6]
-% C = 1e-3;
-% R1 = 1e3;
-% R2 = 1e3;
-% L = 1e-3;
-
-
-
-A = [   -1/(R2*C)    1/C     ; 
-        -1/L         -R1/L   ];
+% lambda = [-100, -1e6]
+C = 500e-6;
+R1 = 20;
+R2 = 1e3;
+L = 20e-6;
     
-[V,D] = eig(A)
-    
-D * h
+
+% forzante (t)
+w = 100;
+Vi = @(t) sin(2*pi*w*t);
+
+
+f = @(t,y) RLC_model(t, y, C, R1, R2, L, Vi);
 
 %% Eulero in avanti
 
-% procediamo con la diagonalizzata e poi riconvertiremo i risultati nelle
-% incognite di A
-
-for i = 1:nstep-1
-    Z(:,i+1) = Z(:,i) + h * D * Z(:,i);   
+y_fe(:,1) = [0;0];
+for ii = 1:numel(t)-1
+    y_fe(:,ii+1) = y_fe(:,ii) + h .* f(t(ii),y_fe(:,ii));
 end
 
-% torniamo alla variabile pre diagonalizzazione
-X = inv(V) * Z ;
+%% Eulero indietro
 
-%figure(2);
-% here you can see the attempt to resolve with forward euler just explodes 
-figure(1);
-plot(t, X(1,:)); 
+y_be(:,1) = [0;0];
+for ii = 1:numel(t)-1
+    BE = @(x)  y_be(:,ii) + h .* f(t(ii+1),x) - x;
+    y_be(:,ii+1) = fsolve(BE, y_be(:,ii),options);
+end
+
+%% BDF3
+% risolta tramite BDF3 - pag 345 Quarteroni
+% u(t+1) = 18/11*u(t) - 9/11*u(t-1) + 2/11*u(t-2) + 6/11*h*f(t+1);
+
+
+y_BDF3(:,1) = [0;0];
+y_BDF3(:,2) = [0;0];
+y_BDF3(:,3) = [0;0];
+for ii = 3:numel(t)-1
+    BDF3 = @(x) (18/11).*y_BDF3(:, ii) - (9/11)*y_BDF3(:,ii-1) + ...
+    (2/11).*y_BDF3(:,ii-2)  + (6/11 ).* h*f(t(ii+1),x) - x;
+    
+    y_BDF3(:, ii+1) = fsolve( BDF3, y_BDF3(:, ii),options);
+end
+%% ode15s
+
+[t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
+
+
+%% Plot
 figure(2);
-plot(t, X(2,:));
-
+hold on
+% plot(t,y_fe(1,:));
+plot(t,y_be(1,:));
+plot(t,y_BDF3(1,:));
+plot(t_ode15s,y_ode15s(:,1));
+ylim([-0.2 0.3])
+title("RLC filter - stiff system");
+legend('Forward euler','Backwards euler','BDF3', 'ode15s')
 
 
