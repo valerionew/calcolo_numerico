@@ -18,14 +18,14 @@ h = (tend-tstart)/nstep
 %% Parametri circuitali
 % 
 % Poco stiff
-% lamda = [-100, -1000]
+% lambda = [-100, -1000]
 C = 1e-4;
 R1 = 1e3;
 R2 = 1e2;
 L = 1;
 
 % Molto stiff
-% lamda = [-2, -1e6]
+% lambda = [-2, -1e6]
 % C = 1e-3;
 % R1 = 1e3;
 % R2 = 1e3;
@@ -60,4 +60,6 @@ figure(1);
 plot(t, X(1,:)); 
 figure(2);
 plot(t, X(2,:));
+
+
 
