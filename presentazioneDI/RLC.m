@@ -98,4 +98,15 @@ ylim([-0.2 0.3])
 title("RLC filter - stiff system - BDF3 priming still to do right");
 legend('exact','Forward euler','Backwards euler','Crank-Nicholson','BDF3', 'ode15s')
 
+%% FE Plot
+
+figure(3);
+hold on
+plot(t_ex,y_ex);
+plot(t,y_fe(1,:), 'r');
+ylim([-0.2 0.3])
+title("RLC filter - stiff system - Forward Euler solution");
+legend('Exact solution','Forward euler');
+ylabel('Vc(t) [V]');
+xlabel('t [s]');
 
