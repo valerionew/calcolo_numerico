@@ -20,23 +20,23 @@ h = (tend-tstart)/nstep
 %% Parametri circuitali
 % 
 % Poco stiff
-% lambda = [-100, -1000]
-% C = 7.6e-4;
-% R1 = 20;
-% R2 = 1e3;
-% L = 67e-3;
+% lambda = [-100, -200]
+C = 7.6e-4;
+R1 = 20;
+R2 = 1e3;
+L = 67e-3;
 
 % Molto stiff
 % lambda = [-100, -1e6]
-C = 500e-6;
-R1 = 20;
-R2 = 1e3;
-L = 20e-6;
-    
+% C = 500e-6;
+% R1 = 20;
+% R2 = 1e3;
+% L = 20e-6;
+%     
 
 % forzante (t)
-w = 100;
-Vi = @(t) sin(2*pi*w*t);
+w = 50;
+Vi = @(t) 0.5.* sin(2*pi*w*t);
 
 % condizione iniziale
 y0 = [0;0];
@@ -148,7 +148,7 @@ end
  
 %% ode15s
 
-[t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
+[t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0],odeset('Refine',1));
 
 %% Plot function
 figure(1);
@@ -164,22 +164,22 @@ plot(t,y_BDF6(1,:));
 plot(t_ode15s,y_ode15s(:,1));
 ylim([-0.2 0.3])
 title("RLC filter - stiff system - BDF# comparison");
-legend('exact','BDF1','BDF2','BDF4','BDF4','BDF5','BDF6', 'ode15s')
+legend('exact','BDF1','BDF2','BDF3','BDF4','BDF5','BDF6', 'ode15s')
 
 %% Plot errors
-
+% 
 % not sure about this
 
-% figure(2);
-% hold on
-% 
-% plot(t,abs(y_BDF1(1,:)-y_ex(1:2:numel(y_ex))));
-% plot(t,abs(y_BDF2(1,:)-y_ex(1:2:numel(y_ex))));
-% plot(t,abs(y_BDF3(1,:)-y_ex(1:2:numel(y_ex))));
-% plot(t,abs(y_BDF4(1,:)-y_ex(1:2:numel(y_ex))));
-% plot(t,abs(y_BDF5(1,:)-y_ex(1:2:numel(y_ex))));
-% plot(t,abs(y_BDF6(1,:)-y_ex(1:2:numel(y_ex))));
-% title("RLC filter - stiff system - BDF# comparison errors");
-% legend('BDF1','BDF2','BDF4','BDF4','BDF5','BDF6', 'ode15s')
+figure(2);
+hold on
+
+plot(t,abs(y_BDF1(1,:)-y_ex(1:2:numel(y_ex))));
+plot(t,abs(y_BDF2(1,:)-y_ex(1:2:numel(y_ex))));
+plot(t,abs(y_BDF3(1,:)-y_ex(1:2:numel(y_ex))));
+plot(t,abs(y_BDF4(1,:)-y_ex(1:2:numel(y_ex))));
+plot(t,abs(y_BDF5(1,:)-y_ex(1:2:numel(y_ex))));
+plot(t,abs(y_BDF6(1,:)-y_ex(1:2:numel(y_ex))));
+title("RLC filter - stiff system - BDF# comparison errors");
+legend('BDF1','BDF2','BDF4','BDF4','BDF5','BDF6');
 
 

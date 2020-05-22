@@ -73,8 +73,8 @@ end
 
 
 y_BDF3(:,1) = [0;0];
-y_BDF3(:,2) = [0;0];
-y_BDF3(:,3) = [0;0];
+y_BDF3(:,2) = fsolve(@(x)  y_BDF3(:,1) + h .* f(t(1+1),x) - x ,y_BDF3(:,1), options) ;
+y_BDF3(:,3) = fsolve(@(x)  (4/3).* y_BDF3(:,2) - (1/3).* y_BDF3(:,1) + (2/3) .* h.*f(t(3),x) - x, y_BDF3(:,2),options);
 for ii = 3:numel(t)-1
     BDF3 = @(x) (18/11).*y_BDF3(:, ii) - (9/11)*y_BDF3(:,ii-1) + ...
     (2/11).*y_BDF3(:,ii-2)  + (6/11 ).* h*f(t(ii+1),x) - x;
