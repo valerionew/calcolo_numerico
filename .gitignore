@@ -1,4 +1,7 @@
 *.pdf
-*.asv
-annoscorso/
+*.asv 
+annoscorso/ 
 *.mat
+*.mov 
+*.mp4
+*.mkv
