@@ -18,9 +18,9 @@ t = linspace(tstart, tend, nstep);
 h = (tend-tstart)/nstep;
 
 %% Parametri circuitali
-% 
+%
 % Poco stiff
-% lambda = [-100, -1000]
+% lambda = [-100, -200]
 C = 7.6e-4;
 R1 = 20;
 R2 = 1e3;
@@ -32,11 +32,11 @@ L = 67e-3;
 % R1 = 20;
 % R2 = 1e3;
 % L = 20e-6;
-    
+
 
 % forzante (t)
-w = 100;
-Vi = @(t) sin(2*pi*w*t);
+w = 50;
+Vi = @(t) 0.5 .* sin(2*pi*w*t);
 
 
 f = @(t,y) RLC_model(t, y, C, R1, R2, L, Vi);
@@ -78,7 +78,7 @@ y_BDF3(:,3) = fsolve(@(x)  (4/3).* y_BDF3(:,2) - (1/3).* y_BDF3(:,1) + (2/3) .* 
 for ii = 3:numel(t)-1
     BDF3 = @(x) (18/11).*y_BDF3(:, ii) - (9/11)*y_BDF3(:,ii-1) + ...
     (2/11).*y_BDF3(:,ii-2)  + (6/11 ).* h*f(t(ii+1),x) - x;
-    
+
     y_BDF3(:, ii+1) = fsolve( BDF3, y_BDF3(:, ii),options);
 end
 %% ode15s
@@ -121,8 +121,7 @@ hold on
 plot(t_ex,y_ex);
 plot(t,y_fe(1,:), 'r');
 ylim([-0.2 0.3])
-title("RLC filter - stiff system - Forward Euler solution");
+title("RLC filter - non stiff system - Forward Euler solution");
 legend('Exact solution','Forward euler');
 ylabel('Vc(t) [V]');
 xlabel('t [s]');
-

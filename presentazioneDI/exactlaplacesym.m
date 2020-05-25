@@ -1,23 +1,26 @@
 clear all
 close all
-syms s L_sym C_sym R1_sym R2_sym
+syms s L C R1 R2
  
 Ampl = 0.5;
 w = 50;
-TF = R2_sym./( s.^2.*L_sym.*C_sym.*R2_sym + s.*(L_sym + R1_sym.*R2_sym.*C_sym) + R1_sym + R2_sym);
+TF = R2./( s.^2.*L.*C.*R2 + s.*(L + R1.*R2.*C) + R1 + R2);
 F = TF .* Ampl.*(2.*pi.*w)./((2.*pi.*w).^2 + s.^2);
 
 f = ilaplace(F);
+% Poco stiff
+% lambda = [-100, -200]
+C = 7.6e-4;
+R1 = 20;
+R2 = 1e3;
+L = 67e-3;
 
-% C_sym = 500e-6;
-% R1_sym = 20;
-% R2_sym = 1e3;
-% L_sym = 20e-6;
-
-C_sym = 7.6e-4;
-R1_sym = 20;
-R2_sym = 1e3;
-L_sym = 67e-3;
+% Molto stiff
+% lambda = [-100, -1e6]
+% C = 500e-6;
+% R1 = 20;
+% R2 = 1e3;
+% L = 20e-6;
 
 
 TF = subs(TF)
