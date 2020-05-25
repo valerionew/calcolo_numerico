@@ -21,17 +21,17 @@ h = (tend-tstart)/nstep;
 % 
 % Poco stiff
 % lambda = [-100, -1000]
-% C = 7.6e-4;
-% R1 = 20;
-% R2 = 1e3;
-% L = 67e-3;
+C = 7.6e-4;
+R1 = 20;
+R2 = 1e3;
+L = 67e-3;
 
 % Molto stiff
 % lambda = [-100, -1e6]
-C = 500e-6;
-R1 = 20;
-R2 = 1e3;
-L = 20e-6;
+% C = 500e-6;
+% R1 = 20;
+% R2 = 1e3;
+% L = 20e-6;
     
 
 % forzante (t)
@@ -84,6 +84,8 @@ end
 %% ode15s
 
 [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
+
+
 
 %% Plot
 figure(1);
