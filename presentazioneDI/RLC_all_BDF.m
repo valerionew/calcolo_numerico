@@ -164,14 +164,9 @@ plot(t,y_BDF6(1,:));
 plot(t_ode15s,y_ode15s(:,1));
 ylim([-0.2 0.3])
 title("RLC filter - stiff system - BDF# comparison");
-<<<<<<< HEAD
-legend('exact','BDF1','BDF2','BDF3','BDF4','BDF5','BDF6', 'ode15s')
-=======
 legend('exact','BDF1','BDF2','BDF4','BDF4','BDF5','BDF6', 'ode15s');
 ylabel('Vc(t) [V]');
 xlabel('t [s]');
->>>>>>> 014efc7... Esportato grafico soluzione RLC
-
 %% Plot errors
 % 
 % not sure about this

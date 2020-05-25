@@ -9,6 +9,8 @@ format longe;
 close all;
 clear all;
 
+addpath("exactsolutions\");
+
 options = optimset('Display','off');
 %% Parametri di simulazione
 tstart = 0;
@@ -41,7 +43,7 @@ Vi = @(t) 0.5 .* sin(2*pi*w*t);
 
 f = @(t,y) RLC_model(t, y, C, R1, R2, L, Vi);
 
-load y_ex.mat;
+load y_ex_nonstiff_0.5V_50Hz.mat;
 
 %% Eulero in avanti
 
