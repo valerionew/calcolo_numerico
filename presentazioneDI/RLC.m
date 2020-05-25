@@ -10,6 +10,7 @@ close all;
 clear all;
 
 addpath("exactsolutions\");
+addpath("BDF\");
 
 options = optimset('Display','off');
 %% Parametri di simulazione
@@ -73,21 +74,11 @@ end
 % risolta tramite BDF3 - pag 345 Quarteroni
 % u(t+1) = 18/11*u(t) - 9/11*u(t-1) + 2/11*u(t-2) + 6/11*h*f(t+1);
 
+y_BDF3 = BDF3(f,t,y0);
 
-y_BDF3(:,1) = [0;0];
-y_BDF3(:,2) = fsolve(@(x)  y_BDF3(:,1) + h .* f(t(1+1),x) - x ,y_BDF3(:,1), options) ;
-y_BDF3(:,3) = fsolve(@(x)  (4/3).* y_BDF3(:,2) - (1/3).* y_BDF3(:,1) + (2/3) .* h.*f(t(3),x) - x, y_BDF3(:,2),options);
-for ii = 3:numel(t)-1
-    BDF3 = @(x) (18/11).*y_BDF3(:, ii) - (9/11)*y_BDF3(:,ii-1) + ...
-    (2/11).*y_BDF3(:,ii-2)  + (6/11 ).* h*f(t(ii+1),x) - x;
-
-    y_BDF3(:, ii+1) = fsolve( BDF3, y_BDF3(:, ii),options);
-end
 %% ode15s
 
 [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
-
-
 
 %% Plot
 figure(1);
