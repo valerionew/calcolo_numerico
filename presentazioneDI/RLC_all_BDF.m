@@ -20,7 +20,7 @@ nstep = 500;
 t = linspace(tstart, tend, nstep);
 h = (tend-tstart)/nstep
 
-load y_ex_stiff_sca_0.25V.mat;
+load y_ex_stiff_shifted_step_0.25V.mat;
 
 %% Parametri circuitali
 %
@@ -40,9 +40,8 @@ L = 20e-6;
 
 
 % forzante (t)
-w = 50;
-% Vi = @(t) 0.5.* sin(2*pi*w*t);
-Vi = @(t) 0.25;
+t1 = 0.02;
+Vi = @(t) 0.25 .* (t >= t1+eps);
 
 % condizione iniziale
 y0 = [0;0];
@@ -76,41 +75,42 @@ y_BDF6 = BDF6(f,t,y0);
 
 %% ode15s
 
-[t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0],odeset('Refine',1));
+% [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0],odeset('Refine',1));
 
 %% Plot function
 figure(1);
 hold on
 ylim([-0.2 0.3])
+plot(t, Vi(t));
 plot(t_ex,y_ex);
-plot(t,y_BDF1(1,:));
-plot(t,y_BDF2(1,:));
-plot(t,y_BDF3(1,:));
-plot(t,y_BDF4(1,:));
-plot(t,y_BDF5(1,:));
+plot(t,y_BDF1(1,:),'o');
+plot(t,y_BDF2(1,:),'x');
+plot(t,y_BDF3(1,:),'-');
+plot(t,y_BDF4(1,:),'o-');
+plot(t,y_BDF5(1,:)),'+';
 plot(t,y_BDF6(1,:));
-plot(t_ode15s,y_ode15s(:,1));
+% plot(t_ode15s,y_ode15s(:,1));
 ylim([-0.2 0.3])
 title("RLC filter - stiff system - BDF# comparison");
-legend('exact','BDF1','BDF2','BDF3','BDF4','BDF5','BDF6', 'ode15s');
+legend('in','exact','BDF1','BDF2','BDF3','BDF4','BDF5','BDF6')
 ylabel('Vc(t) [V]');
 xlabel('t [s]');
 %% Plot errors
-
-figure(2);
-hold on
-
-plot(t,abs(y_BDF1(1,:)-y_ex(1:2:numel(y_ex))));
-plot(t,abs(y_BDF2(1,:)-y_ex(1:2:numel(y_ex))));
-plot(t,abs(y_BDF3(1,:)-y_ex(1:2:numel(y_ex))));
-plot(t,abs(y_BDF4(1,:)-y_ex(1:2:numel(y_ex))));
-plot(t,abs(y_BDF5(1,:)-y_ex(1:2:numel(y_ex))));
-plot(t,abs(y_BDF6(1,:)-y_ex(1:2:numel(y_ex))));
-title("RLC filter - stiff system - BDF# comparison errors");
-legend('BDF1','BDF2','BDF3','BDF4','BDF5','BDF6');
+% 
+% figure(2);
+% hold on
+% 
+% plot(t,abs(y_BDF1(1,:)-y_ex(1:2:numel(y_ex))));
+% plot(t,abs(y_BDF2(1,:)-y_ex(1:2:numel(y_ex))));
+% plot(t,abs(y_BDF3(1,:)-y_ex(1:2:numel(y_ex))));
+% plot(t,abs(y_BDF4(1,:)-y_ex(1:2:numel(y_ex))));
+% plot(t,abs(y_BDF5(1,:)-y_ex(1:2:numel(y_ex))));
+% plot(t,abs(y_BDF6(1,:)-y_ex(1:2:numel(y_ex))));
+% title("RLC filter - stiff system - BDF# comparison errors");
+% legend('BDF1','BDF2','BDF3','BDF4','BDF5','BDF6');
 %
 %
- e_BDF1  = norm(y_BDF1(1,:) - abs(y_BDF1(1,:)-y_ex(1:2:numel(y_ex))), 2)
+%  e_BDF1  = norm(y_BDF1(1,:) - abs(y_BDF1(1,:)-y_ex(1:2:numel(y_ex))), 2)
 % e_BDF2  = norm(y_BDF2(1,:) - y_ex, 2)
 % e_BDF3  = norm(y_BDF3(1,:) - y_ex, 2)
 % e_BDF4  = norm(y_BDF4(1,:) - y_ex, 2)
