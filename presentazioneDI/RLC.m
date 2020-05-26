@@ -26,17 +26,17 @@ load y_ex_nonstiff_shifted_step_0.25V.mat;
 %
 % Poco stiff
 % lambda = [-100, -200]
-C = 7.6e-4;
-R1 = 20;
-R2 = 1e3;
-L = 67e-3;
+% C = 7.6e-4;
+% R1 = 20;
+% R2 = 1e3;
+% L = 67e-3;
 
 % Molto stiff
 % lambda = [-100, -1e6]
-% C = 500e-6;
-% R1 = 20;
-% R2 = 1e3;
-% L = 20e-6;
+C = 500e-6;
+R1 = 20;
+R2 = 1e3;
+L = 20e-6;
 
 
 % forzante (t)
@@ -88,26 +88,43 @@ end
 [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
 
 %% Plot
-figure(1);
+figure('Position', [100 100 900 600]);
 hold on
 plot(t, Vi(t));
 plot(t_ex,y_ex);
-plot(t,y_fe(1,:));
-plot(t,y_be(1,:),'x');
-% plot(t,y_cn(1,:));
-plot(t,y_BDF3(1,:),'x');
+plot(t,y_fe(1,:), 'color', '#A2142F');
+plot(t,y_be(1,:), 'color', '#EDB120');
+plot(t,y_cn(1,:), 'color', 	'#77AC30');
+plot(t,y_BDF3(1,:), 'color', '#4DBEEE');
 % plot(t_ode15s,y_ode15s(:,1));
-ylim([-0.05 0.3])
-xlim([0 0.1])
-title("RLC filter - stiff system - BDF3 priming still to do right");
-legend('in','exact','Forward euler','Backwards euler','BDF3')
+ylim([-0.1 0.3])
+xlim([0, 0.2]);
+title("RLC filter - stiff system");
+legend('exact','Forward euler','Backwards euler','Crank-Nicholson','BDF3', 'ode15s')
 ylabel('Vc(t) [V]');
 xlabel('t [s]');
 
-%%
-figure(2);
+%% Light plot
+figure('Position', [100 100 900 600]);
 hold on
-%plot(t,abs(y_fe(1,:)-y_ex(1:10:numel(y_ex))));
-plot(t,abs(y_be(1,:)-y_ex(1:10:numel(y_ex))));
-plot(t,abs(y_BDF3(1,:)-y_ex(1:10:numel(y_ex))));
+plot(t_ex,y_ex, 'x'); %blue
+plot(t,y_fe(1,:), 'color', '#A2142F'); %red
+plot(t,y_BDF3(1,:), 'color', '#4DBEEE'); %cyan
+%ylim([-0.2 0.3])
+xlim([0, 0.25]);
+title("RLC filter - stiff system - solution comparison");
+legend('Exact solution','Forward euler','BDF3')
+ylabel('Vc(t) [V]');
+xlabel('t [s]');
 
+%% FE Plot
+figure('Position', [100 100 900 600]);
+hold on
+plot(t_ex,y_ex); %blue
+plot(t,y_fe(1,:), 'color', '#A2142F'); %red
+ylim([-0.1 0.3])
+xlim([0, 0.1]);
+title("RLC filter - stiff system - Forward Euler solution");
+legend('Exact solution','Forward euler');
+ylabel('Vc(t) [V]');
+xlabel('t [s]');
