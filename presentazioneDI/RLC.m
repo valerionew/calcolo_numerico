@@ -16,7 +16,7 @@ options = optimset('Display','off');
 %% Parametri di simulazione
 tstart = 0;
 tend = 1;
-nstep = 50;
+nstep = 100;
 t = linspace(tstart, tend, nstep);
 h = (tend-tstart)/nstep;
 
@@ -24,27 +24,27 @@ h = (tend-tstart)/nstep;
 %
 % Poco stiff
 % lambda = [-100, -200]
-C = 7.6e-4;
-R1 = 20;
-R2 = 1e3;
-L = 67e-3;
+% C = 7.6e-4;
+% R1 = 20;
+% R2 = 1e3;
+% L = 67e-3;
 
 % Molto stiff
 % lambda = [-100, -1e6]
-% C = 500e-6;
-% R1 = 20;
-% R2 = 1e3;
-% L = 20e-6;
+C = 500e-6;
+R1 = 20;
+R2 = 1e3;
+L = 20e-6;
 
 
 % forzante (t)
-w = 50;
-Vi = @(t) 0.5 .* sin(2*pi*w*t);
-
+% w = 50;
+% Vi = @(t) 0.5 .* sin(2*pi*w*t);
+Vi = @(t) ones(size(t)) .* 0.25;
 
 f = @(t,y) RLC_model(t, y, C, R1, R2, L, Vi);
 
-load y_ex_nonstiff_0.5V_50Hz.mat;
+load y_ex_stiff_sca_0.25V.mat;
 
 %% Eulero in avanti
 
@@ -81,40 +81,42 @@ y_BDF3 = BDF3(f,t,y0);
 % [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
 
 %% Plot
-figure(1);
+figure('Position', [100 100 900 600]);
 hold on
 plot(t_ex,y_ex);
-plot(t,y_fe(1,:));
-plot(t,y_be(1,:));
-plot(t,y_cn(1,:));
-plot(t,y_BDF3(1,:));
+plot(t,y_fe(1,:), 'color', '#A2142F');
+plot(t,y_be(1,:), 'color', '#EDB120');
+plot(t,y_cn(1,:), 'color', 	'#77AC30');
+plot(t,y_BDF3(1,:), 'color', '#4DBEEE');
 % plot(t_ode15s,y_ode15s(:,1));
-ylim([-0.2 0.3])
-title("RLC filter - stiff system - BDF3 priming still to do right");
+ylim([-0.1 0.3])
+xlim([0, 0.2]);
+title("RLC filter - stiff system");
 legend('exact','Forward euler','Backwards euler','Crank-Nicholson','BDF3', 'ode15s')
 ylabel('Vc(t) [V]');
 xlabel('t [s]');
 
 %% Light plot
-figure(2);
+figure('Position', [100 100 900 600]);
 hold on
-plot(t_ex,y_ex, 'x');
-plot(t,y_fe(1,:), 'r');
-plot(t,y_BDF3(1,:), 'm');
-ylim([-0.2 0.3])
+plot(t_ex,y_ex, 'x'); %blue
+plot(t,y_fe(1,:), 'color', '#A2142F'); %red
+plot(t,y_BDF3(1,:), 'color', '#4DBEEE'); %cyan
+%ylim([-0.2 0.3])
+xlim([0, 0.25]);
 title("RLC filter - stiff system - solution comparison");
 legend('Exact solution','Forward euler','BDF3')
 ylabel('Vc(t) [V]');
 xlabel('t [s]');
 
 %% FE Plot
-
-figure(3);
+figure('Position', [100 100 900 600]);
 hold on
-plot(t_ex,y_ex);
-plot(t,y_fe(1,:), 'r');
-ylim([-0.2 0.3])
-title("RLC filter - non stiff system - Forward Euler solution");
+plot(t_ex,y_ex); %blue
+plot(t,y_fe(1,:), 'color', '#A2142F'); %red
+ylim([-0.1 0.3])
+xlim([0, 0.1]);
+title("RLC filter - stiff system - Forward Euler solution");
 legend('Exact solution','Forward euler');
 ylabel('Vc(t) [V]');
 xlabel('t [s]');
