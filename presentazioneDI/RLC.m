@@ -52,7 +52,6 @@ y_fe(:,1) = [0;0];
 for ii = 1:numel(t)-1
     y_fe(:,ii+1) = y_fe(:,ii) + h .* f(t(ii),y_fe(:,ii));
 end
-
 %% Eulero indietro
 
 y_be(:,1) = [0;0];
@@ -76,13 +75,13 @@ end
 
 y0 = [0;0];
 y_BDF3 = zeros(numel(y0),numel(t));
-
+tic
 for ii = 3:numel(t)-1
     BDF3 = @(x) (18/11).*y_BDF3 (:, ii) - (9/11).*y_BDF3 (:,ii-1) + ...
     (2/11).*y_BDF3 (:,ii-2)  + (6/11 ).* h.*f(t(ii+1),x) - x;
     y_BDF3 (:,ii+1) = fsolve(BDF3, y_BDF3 (:,ii),optimset('Display','off'));
 end
-
+toc
 %% ode15s
 
 [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
@@ -107,9 +106,9 @@ xlabel('t [s]');
 %% BDF Plot
 figure('Position', [100 100 900 600]);
 hold on
-plot(t, Vi(t), 'color', '#7E2F8E');
+plot(t, Vi(t), 'color', 'black', 'LineWidth', 0.5);
 plot(t_ex,y_ex, 'marker', 'x', 'lineStyle', 'none', 'color', '#0072BD','MarkerIndices',1:25:length(t_ex));
-plot(t,y_BDF3(1,:), 'color', '#4DBEEE');
+plot(t,y_BDF3(1,:), 'color', '#A2142F');
 ylim([-0.1 0.3])
 xlim([0, 0.1]);
 title("RLC filter - stiff system");
@@ -133,14 +132,27 @@ xlabel('t [s]');
 %% FE Plot
 figure('Position', [100 100 900 600]);
 hold on
-%plot(t_ex,y_ex, 'marker', 'x', 'lineStyle', 'none', 'color', '#0072BD',
-%'MarkerIndices',1:25:length(t_ex)); %blue for non stiff
-plot(t_ex,y_ex, 'color', '#0072BD'); %blue
+plot(t_ex,y_ex, 'marker', 'x', 'lineStyle', 'none', 'color', '#0072BD', 'MarkerIndices',1:25:length(t_ex)); %blue for non stiff
+%plot(t_ex,y_ex, 'color', '#0072BD'); %blue
 plot(t,y_fe(1,:), 'color', '#A2142F'); %red
-ylim([-0.2 0.2])
-%xlim([0, 0.1]); for non stiff
-xlim([0.018, 0.03])
-title("RLC filter - stiff system - Forward Euler solution");
-legend('Exact solution','Forward euler');
+plot(t, Vi(t), 'color', 'black', 'LineWidth', 0.5);
+ylim([-0.1, 0.3]); % for non stiff
+%ylim([-0.2 0.2])
+xlim([0, 0.1]); %for non stiff
+%xlim([0.018, 0.03])
+title("RLC filter - non stiff system - Forward Euler solution");
+legend('Exact solution','Forward euler', 'Vin(t)');
 ylabel('Vc(t) [V]');
+xlabel('t [s]');
+
+%% Vin Plot
+
+figure('Position', [100 100 450 300]);
+hold on
+grid off
+plot(t, Vi(t), 'color', 'black', 'LineWidth', 2);
+ylim([-0.1 0.35])
+xlim([0, 0.1])
+title("Vin(t)");
+ylabel('Vin(t) [V]');
 xlabel('t [s]');
