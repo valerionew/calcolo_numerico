@@ -15,8 +15,8 @@ addpath("BDF\");
 options = optimset('Display','off');
 %% Parametri di simulazione
 tstart = 0;
-tend = 0.1;
-nstep = 500;
+tend = 1;
+nstep = 50;
 t = linspace(tstart, tend, nstep);
 h = (tend-tstart)/nstep;
 
@@ -73,12 +73,12 @@ end
 %% BDF3
 % risolta tramite BDF3 - pag 345 Quarteroni
 % u(t+1) = 18/11*u(t) - 9/11*u(t-1) + 2/11*u(t-2) + 6/11*h*f(t+1);
-
+y0 = [0;0];
 y_BDF3 = BDF3(f,t,y0);
 
 %% ode15s
 
-[t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
+% [t_ode15s,y_ode15s] = ode15s(f,[tstart tend],[0; 0]);
 
 %% Plot
 figure(1);
@@ -88,7 +88,7 @@ plot(t,y_fe(1,:));
 plot(t,y_be(1,:));
 plot(t,y_cn(1,:));
 plot(t,y_BDF3(1,:));
-plot(t_ode15s,y_ode15s(:,1));
+% plot(t_ode15s,y_ode15s(:,1));
 ylim([-0.2 0.3])
 title("RLC filter - stiff system - BDF3 priming still to do right");
 legend('exact','Forward euler','Backwards euler','Crank-Nicholson','BDF3', 'ode15s')

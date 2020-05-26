@@ -1,13 +1,11 @@
 clear all
 close all
 syms s L C R1 R2
- 
-Ampl = 0.5;
-w = 100;
 
 
 TF = R2./( s.^2.*L.*C.*R2 + s.*(L + R1.*R2.*C) + R1 + R2);
-F = TF .* Ampl.*(2.*pi.*w)./((2.*pi.*w).^2 + s.^2);
+
+F = TF .* 0.25 ./s;
 
 f = ilaplace(F);
 % Poco stiff
@@ -42,4 +40,4 @@ t = linspace(0,0.1,1000);
 t_ex = t;
 y_ex = double(subs(f));
 
-save( "y_ex_stiff_0.5V_100Hz.mat", 'y_ex', 't_ex');
+save( "y_ex_stiff_sca_0.25V.mat", 'y_ex', 't_ex');

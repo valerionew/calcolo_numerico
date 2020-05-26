@@ -2,8 +2,8 @@ clear all
 close all
 syms s L C R1 R2
  
-% Ampl = 0.5;
-% w = 100;
+Ampl = 0.5;
+ w = 100;
 % 
 
 TF = R2./( s.^2.*L.*C.*R2 + s.*(L + R1.*R2.*C) + R1 + R2);
@@ -33,9 +33,9 @@ den=sym2poly(d);
 TF=tf(num,den);
 
 
-bode(TF);
+bodemag(TF);
 
-title("RLC filter - not stiff system");
+title("RLC filter - stiff system");
 
 % t = linspace(0,0.1,1000);
 % 
