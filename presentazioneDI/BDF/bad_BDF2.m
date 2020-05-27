@@ -5,7 +5,7 @@ function y = bad_BDF2(f,t,y0)
 h = diff(t);
 y = zeros(numel(y0),numel(t));
 
-y(:,1:2) = BDF1(f,t(1:2),y0);
+y(:,1:2) = bad_BDF1(f,t(1:2),y0);
 
 for ii = 2:numel(t)-1
     BDF2 = @(x)  (4/3).* y(:,ii) - (1/3).* y(:,ii-1) ...

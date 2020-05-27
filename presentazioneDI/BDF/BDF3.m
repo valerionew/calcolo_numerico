@@ -5,7 +5,9 @@ function y = BDF3(f,t,y0)
 h = diff(t);
 y = zeros(numel(y0),numel(t));
 
-y(:,1:3) = BDF2(f,t(1:3),y0);
+if(size(y0,2)<2)
+    warning("not enough starting values, assuming all zeros");
+end
 
 for ii = 3:numel(t)-1
     BDF3 = @(x) (18/11).*y(:, ii) - (9/11).*y(:,ii-1) + ...
@@ -14,4 +16,3 @@ for ii = 3:numel(t)-1
 end
 
 end
-

@@ -5,7 +5,7 @@ function y = bad_BDF4(f,t,y0)
 h = diff(t);
 y = zeros(numel(y0),numel(t));
 
-y(:,1:4) = BDF3(f,t(1:4),y0);
+y(:,1:4) = bad_BDF3(f,t(1:4),y0);
 
 for ii = 4:numel(t)-1
     BDF4 = @(x) (48/25).*y(:, ii) - (36/25).*y(:,ii-1) + ...
