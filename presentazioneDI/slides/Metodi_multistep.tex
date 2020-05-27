@@ -48,7 +48,7 @@
 
 \date{27/05/2020}
 \author{Giacomo Tombolan \and Valerio Nappi \and 
-      Lorenzo Rossi \and  \\Marco Manganini \and
+      Lorenzo Rossi \and  \texorpdfstring{\\} Marco Manganini \and
       Mirko Seghezzi}
 
 \begin{document}
@@ -78,6 +78,10 @@
     Robertson H. H. "The Solution of a Set of Reaction Rate Equations"
     \newblock {in: Walsh J. (ed.), \em Numerical Analysis. An Introduction based on a Symposium Organized by the Institute of Mathematics and its Applications}.
     \newblock Academic Press, 1972. pp 178-182
+    \bibitem{BDF_Scholarpedia}
+    Gear B.
+    \newblock Backward Differentiation Formulas (Scholarpedia)
+    \newblock \url{http://www.scholarpedia.org/article/Backward_differentiation_formulas}
   
 
    \end{thebibliography}
@@ -109,7 +113,7 @@
 \end{frame}
 
 
-\section{Sistemi stiff: circuito RLC}\label{sec:sec3}
+\section{Analisi del circuito RLC}\label{sec:sec2}
 
 \begin{frame}{Circuito RLC}
 Si supponga di prendere in esame il seguente circuito, con l'obiettivo di calcolarne la tensione di uscita \( V_{out} \) considerando uno scalino ritardato in ingresso, di ampiezza \( V_{in} \)
@@ -142,50 +146,52 @@ Analizziamo il circuito attraverso la legge di Kirchhoff delle correnti e quella
     
     \hspace*{1.7cm}\begin{minipage}{\textwidth}
         \large
-        \begin{cases}
+        $\begin{cases}
            \textcolor{Cerulean}{KLV:}  V_{in} = V_L + V_{R1} + V_{out} \\
-           \textcolor{BurntOrange}{KLC:}  I_{in} =  I_{R2} + I_C \;
-        \end{cases} 
+           \textcolor{BurntOrange}{KLC:}  I_{in} =  I_{R2} + I_C 
+        \end{cases} $
         \medskip\\
-        \begin{cases}
+        $\begin{cases}
             {x_1} = V_{out}\\
-            {x_2} = I_{in} \;
-        \end{cases} 
+            {x_2} = I_{in} 
+        \end{cases} $
         \bigskip\\
         Otteniamo il sistema:\medskip\\
-        \begin{cases}
+        $\begin{cases}
             \dot{x_1} = -\dfrac{1}{L}x_1 - \dfrac{R_1}{L}x_2 + \dfrac{1}{L}V_{in}\\
-            \dot{x_2} = -\dfrac{1}{R_2 C}x_1 + \dfrac{1}{C}x_2  \;
-        \end{cases}
+            \dot{x_2} = -\dfrac{1}{R_2 C}x_1 + \dfrac{1}{C}x_2  
+        \end{cases}$
         \end{minipage}
     \end{multicols}
 \end{frame}
 
 \begin{frame}{Analisi del circuito RLC: rappresentazione matriciale}
 Possiamo riscrivere il sistema ottenuto come matrice:
-\bigskip
+
 %\renewcommand\arraystretch{2.3} % vengono circa alte uguali ma il testo non è centrato
 \large
 \begin{center}
-\begin{bmatrix} 
-\dot{x_1} \\ 
-\dot{x_2} \end{bmatrix}  = 
-\begin{bmatrix}
--\dfrac{1}{L} & - \dfrac{R_1}{L}\\[1.5ex]
--\dfrac{1}{R_2C} & + \dfrac{1}{C}
-\end{bmatrix} 
-\begin{bmatrix} 
-x_1 \\ 
-x_2 \end{bmatrix}
-+
-\begin{bmatrix} 
-0 \\[1.5ex]
--\dfrac{1}{L} 
-\end{bmatrix}
-\begin{bmatrix} 
-0 \\ 
-V_{in} 
-\end{bmatrix}
+\[
+    \begin{bmatrix} 
+    \dot{x_1} \\ 
+    \dot{x_2} \end{bmatrix}  = 
+    \begin{bmatrix}
+    -\dfrac{1}{L} & - \dfrac{R_1}{L}\\[1.5ex]
+    -\dfrac{1}{R_2C} & + \dfrac{1}{C}
+    \end{bmatrix} 
+    \begin{bmatrix} 
+    x_1 \\ 
+    x_2 \end{bmatrix}
+    +
+    \begin{bmatrix} 
+    0 \\[1.5ex]
+    -\dfrac{1}{L} 
+    \end{bmatrix}
+    \begin{bmatrix} 
+    0 \\ 
+    V_{in} 
+    \end{bmatrix}
+\]
 \end{center}
 \normalsize
 Prendiamo in considerazione la matrice dei coefficienti del sistema:
@@ -194,8 +200,6 @@ Prendiamo in considerazione la matrice dei coefficienti del sistema:
 -\dfrac{1}{L} & - \dfrac{R_1}{L}\\[1.5ex]
 -\dfrac{1}{R_2C} & + \dfrac{1}{C}
 \end{bmatrix} \]
-
-
 
 \end{frame}
 
@@ -212,7 +216,7 @@ Prendiamo in considerazione la matrice dei coefficienti del sistema:
         \]
         \medskip
         \item La soluzione libera del sistema sarà una combinazione lineare dei \alert{modi} del sistema: \( e^{\lambda_nt}\)
-        \item Per $\lambda$ positivi il sistema diverge per $t \rightarrow \inf $. Chiediamo quindi autovalori con $\operatorname{\mathbb{R}e}(\lambda)<0$
+        \item Per $\lambda$ positivi il sistema diverge per $t \rightarrow \infty $. Chiediamo quindi autovalori con $\operatorname{\mathbb{R}e}(\lambda)<0$
         \item La soluzione è dominata dall'autovalore \alert{più piccolo}, che individua il polo dominante. 
         \item Numericamente non possiamo permetterci di trascurare gli altri autovalori.
         
@@ -221,7 +225,7 @@ Prendiamo in considerazione la matrice dei coefficienti del sistema:
 \end{frame}
 
 
-\section{Assoluta stabilità}%\label{sec:sec10}
+
     \begin{frame}{Assoluta stabilità}
         Dagli autovalori dipende inoltre la stabilità della risoluzione numerica.\\
         Come visto a lezione, con il metodo di Eulero esplicito abbiamo assoluta stabilità se \(|1+h\lambda| < 1\), con $h$ passo di discretizzazione della variabile indipendente\\
@@ -231,7 +235,7 @@ Prendiamo in considerazione la matrice dei coefficienti del sistema:
         \begin{figure}
         \centering
         \includegraphics[width=0.8\linewidth]{fig6.png}
-        \label{fig:my_label}
+        \label{fig:festability}
         \end{figure}
         \columnbreak
         \bigskip\bigskip
@@ -247,7 +251,7 @@ Prendiamo in considerazione la matrice dei coefficienti del sistema:
         
     \end{frame}
     
-\section{Cosa sono i sistemi Stiff?}\label{sec:sec1}
+\section{Cosa sono i sistemi Stiff?}\label{sec:sec3}
 \begin{frame} \frametitle{Cosa sono i sistemi Stiff?}
     \begin{itemize}
         \item Sono sistemi caratterizzati da modi (autovalori) distanti di molti ordini di grandezza tra di loro. 
@@ -267,28 +271,29 @@ Si supponga di prendere in esame il seguente circuito, con l'obiettivo di calcol
         
           \begin{figure}
        \centering \includegraphics[width=0.6\linewidth]{vin.png}
-        \label{fig:my_label}
+        \label{fig:vin_nonstiff}
         \end{figure}
         
     \columnbreak
+    \bigskip
+    \bigskip
     \hspace{2.5cm}
-    \medskip
-        \begin{cases}
+        $\begin{cases}
             L = 67 \; m H \\
             C = 760 \; \mu F \\
             R_1 = 20 \; \Omega \\
             R_2 = 1 \; k\Omega\\
             %V_{in} = V_0 \cdot \sin(2 \pi \omega t) \; V
-            V_{in} = \; V
-        \end{cases} \\
+            V_{in} = \; Vu(t-0.02)
+        \end{cases}$ \\
         \bigskip
         \bigskip
     \hspace{2.5cm}   
     \fcolorbox{blue}{white}{
-        \begin{cases}
+        $\begin{cases}
         \lambda_1 = -100\\
         \lambda_2 = -200 \;
-        \end{cases}}
+        \end{cases}$}
     \end{multicols}
 \end{frame}
 
@@ -297,8 +302,8 @@ Il valore di \( V_{out}(t) \) è facilmente calcolato usando, ad esempio, un met
 È necessario scegliere un passo di discretizzazione $h$ che soddisfi la relazione $|h \lambda_n| < 2$\\     \bigskip    
     \begin{multicols}{2}
         \begin{figure}
-       \centering        \includegraphics[width=1\linewidth]{rlc_non_stiff_forward_euler.png}
-        \label{fig:my_label}
+       \centering        \includegraphics[width=1.05\linewidth]{rlc_non_stiff_forward_euler.png}
+        \label{fig:fe_nonstiff}
         \end{figure}
     \columnbreak
     \begin{itemize}
@@ -324,26 +329,26 @@ Il valore di \( V_{out}(t) \) è facilmente calcolato usando, ad esempio, un met
             
                           \begin{figure}
        \centering \includegraphics[width=0.6\linewidth]{vin.png}
-        \label{fig:my_label}
+        \label{fig:vin_stiff}
         \end{figure}
     \columnbreak
     \hspace{2.5cm}
     \medskip
-        \begin{cases}
+        $\begin{cases}
             L = 20 \; \mu H \\
             C = 500 \; \mu F \\
             R_1 = 20 \; \Omega \\
             R_2 = 1 \; k\Omega\\
-            V_{in} = \; V
-        \end{cases} \\
+            V_{in} = \; Vu(t-0.02)
+        \end{cases}$ \\
         \bigskip
         \bigskip
     \hspace{2.5cm}   
     \fcolorbox{red}{white}{
-        \begin{cases}
+        $\begin{cases}
             \lambda_1 = -100\\
             \lambda_2 = -1000000 \;
-        \end{cases}}
+        \end{cases}$}
     \end{multicols}
 \end{frame}
 
@@ -353,7 +358,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \begin{figure}
         \centering
         \includegraphics[width=1\linewidth]{rlc_forward_euler.png}
-        \label{fig:my_label}
+        \label{fig:fe_stiff}
         \end{figure}
         \begin{centering}
             Considerando lo stesso h utilizzato prima, considerando solo l'autovalore dominante, la soluzione diverge molto velocemente
@@ -370,20 +375,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
 \end{multicols}
 
 \end{frame}
-\begin{comment}
-    
-\begin{frame}{Risolvere problemi stiff con metodi espliciti}
-\begin{itemize}
-    \item Per poter usare un metodo esplicito, dovremmo avere un passo dettato dall'autovalore più grande 
-    \item Poiché, nel nostro esempio, l'autovalore è a frequenza altissime, il passo risulta estremamente piccolo (\( h\lambda \ll 2 \))
-\end{itemize}
 
-        \begin{figure}
-        \centering        \includegraphics[width=.65\linewidth]{bode_stiff_mag.png}
-        \label{fig:my_label}
-        \end{figure}
-\end{frame}
-\end{comment}
 
 
 \begin{comment}
@@ -416,7 +408,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
     \begin{frame}{Backward Differentiation Formulas (BDF)}
         \begin{itemize}
             %\item Backward Differentiation Formulae: la valutazione n-esima dipende dalla storia passata delle valutazioni e dalla valutazione della f a passo n-esimo
-            \item Linear Multistep Methods (LMM): la valutazione n-esima dipende dalla storia passata delle valutazioni e dalla valutazione della f a passo n-esimo.
+            \item \textbf{Linear Multistep Methods (LMM)}: la valutazione n-esima dipende dalla storia passata delle valutazioni e dalla valutazione della f a passo n-esimo.
             %\item Anche se lineari risolvono comunque problemi non lineari
             \end{itemize}
             \textbf{Vantaggi:}
@@ -424,6 +416,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             %\item Richiedono meno valutazioni della funzione per ogni step (rispetto a Runge-Kutta)
             \item Migliore accuratezza rispetto ad altri metodi (es. RK) a parità di numero di valutazioni della funzione
             \item Metodi costruiti più semplici e performanti in fatto di ordine e stima dell’errore 
+            \item Proprietà di stiff decay
             %\item Migliore accuratezza rispetto a metodi one-step a parità di numero di valutazioni della funzione
         \end{itemize}
         \textbf{Svantaggi:}
@@ -452,7 +445,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             \item Più in generale, per ordini superiori al primo, possiamo scrivere: \\
             \begin{center}
             \begin{tabular}{c  c}
-            \( f(t_n,y_n) = \dfrac{1}{\beta_0}\dfrac{\sum_{j=0}^{k}\alpha_j y_{n-j}}{h } \) &
+            \( f(t_n,y_n) = \dfrac{1}{\beta_0}\dfrac{\sum_{j=0}^{k}\alpha_j y_{n-j}}{h } \) &\space\space
             \( \displaystyle\sum_{j=0}^k \alpha_j y_{n-j} = h\beta_0 f(t_n,y_n) \)
             \end{tabular}
             \end{center}
@@ -492,7 +485,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             \hline
             \(1\) & \(1\) & \(1 \)       & \(1 \) & \(-1\)       &                             &          &         &         &        \\
             \(2\) & \(2\) & \(\sfrac{2}{3} \)    & \(1\) & \(\sfrac{4}{3} \)     & \(\sfrac{1}{3} \)                         &          &         &         &        \\
-            \(3\) & \(3\) & \(\sfrac{6}{11} \)   & \(1\) & \(\sfrac{-18}{11} \)   & \(\sfrac{9}{1} \)                       & \(\sfrac{-2}{11}\)    &         &         &        \\
+            \(3\) & \(3\) & \(\sfrac{6}{11} \)   & \(1\) & \(\sfrac{-18}{11} \)   & \(\sfrac{9}{11} \)                       & \(\sfrac{-2}{11}\)    &         &         &        \\
             \(4\) & \(4\) & \(\sfrac{12}{25} \)  & \(1\) & \(\sfrac{-48}{25} \)   & \(\sfrac{36}{25} \)   & \(\sfrac{-16}{25}\)   & \(\sfrac{3}{25}\)   &         &        \\
             \(5\) & \(5\) & \(\sfrac{60}{137} \) & \(1\) & \(\sfrac{300}{137} \)  & \(\sfrac{300}{137}\) & \(\sfrac{-200}{137}\) & \(\sfrac{75}{137}\)  & \(\sfrac{-12}{137}\) &        \\
             \(6\) & \(6\) & \(\sfrac{60}{147} \) & \(1\) & \(\sfrac{-360}{147} \) & \(\sfrac{450}{147}\) & \(\sfrac{-400}{137}\) & \(\sfrac{225}{147}\) & \(\sfrac{72}{147}\) & \(\sfrac{10}{147}\)
@@ -519,10 +512,10 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             \hline
             \(BDF1\)& \(1 \)       & \(1 \) & \(-1\)       &                             &          &         &         &        \\
             \(BDF2\)& \(\sfrac{2}{3} \)    & \(1\) & \(\sfrac{4}{3} \)     & \(\sfrac{1}{3} \)                         &          &         &         &        \\
-            \(BDF3\)& \(\sfrac{6}{11} \)   & \(1\) & \(\sfrac{-18}{11} \)   & \(\sfrac{9}{1} \)                       & \(\sfrac{-2}{11}\)    &         &         &        \\
+            \(BDF3\)& \(\sfrac{6}{11} \)   & \(1\) & \(\sfrac{-18}{11} \)   & \(\sfrac{9}{11} \)                       & \(\sfrac{-2}{11}\)    &         &         &        \\
             \(BDF4\)& \(\sfrac{12}{25} \)  & \(1\) & \(\sfrac{-48}{25} \)   & \(\sfrac{36}{25} \)   & \(\sfrac{-16}{25}\)   & \(\sfrac{3}{25}\)   &         &        \\
             \(BDF5\)& \(\sfrac{60}{137} \) & \(1\) & \(\sfrac{300}{137} \)  & \(\sfrac{300}{137}\) & \(\sfrac{-200}{137}\) & \(\sfrac{75}{137}\)  & \(\sfrac{-12}{137}\) &        \\
-            \(BDF6\)& \(\sfrac{60}{147} \) & \(1\) & \(\sfrac{-360}{147} \) & \(\sfrac{450}{147}\) & \(\sfrac{-400}{137}\) & \(\sfrac{225}{147}\) & \(\sfrac{72}{147}\) & \(\sfrac{10}{147}\)
+            \(BDF6\)& \(\sfrac{60}{147} \) & \(1\) & \(\sfrac{-360}{147} \) & \(\sfrac{450}{147}\) & \(\sfrac{-400}{147}\) & \(\sfrac{225}{147}\) & \(\sfrac{72}{147}\) & \(\sfrac{10}{147}\)
             \end{tabular}
         \end{table}
     \end{frame}
@@ -537,8 +530,8 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
     \begin{center}
         \begin{table}[]
             \begin{tabular}{ScSl}
-            BDF1 & \( y_n = y_{n-1} + h f(t_{n}, y_{n})\) \textcolor{red}{\rightarrow \( y_{n} = -\alpha_1y_{n-1} + \beta_0h f(t_{n}, y_{n})\)}\\
-            BDF2 & \(y_{n} = \tfrac43 y_{n-1} - \tfrac13 y_{n-2} + \tfrac23 h f(t_{n}, y_{n}) \) \textcolor{red}{\rightarrow \(y_{n} = -\alpha_1y_{n-1} -\alpha_2y_{n-2} + \beta_0h f(t_{n}, y_{n}) \)}\\
+            BDF1 & \( y_n = y_{n-1} + h f(t_{n}, y_{n})\) \textcolor{red}{\( \rightarrow  y_{n} = -\alpha_1y_{n-1} + \beta_0h f(t_{n}, y_{n})\)}\\
+            BDF2 & \(y_{n} = \tfrac43 y_{n-1} - \tfrac13 y_{n-2} + \tfrac23 h f(t_{n}, y_{n}) \) \textcolor{red}{\(\rightarrow y_{n} = -\alpha_1y_{n-1} -\alpha_2y_{n-2} + \beta_0h f(t_{n}, y_{n}) \)}\\
             
             BDF3 & ...\\%\(y_{n+3} = \tfrac{18}{11} y_{n+2} - \tfrac9{11} y_{n+1} + \tfrac2{11} y_n +\tfrac6{11} h f(t_{n+3}, y_{n+3}) \) \\
             BDF4 & ...\\ %\(y_{n+4} = \tfrac{48}{25} y_{n+3} - \tfrac{36}{25} y_{n+2} + \tfrac{16}{25} y_{n+1} - \tfrac{3}{25} y_n + \tfrac{12}{25} h f(t_{n+4}, y_{n+4}) \) \\
@@ -569,7 +562,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \end{itemize}
     \end{frame}
 \end{comment}
-\section{Priming}\label{sec:sec7}
+\section{Problema del Priming}\label{sec:sec7}
     \begin{frame}{Problema del priming: ricerca dei valori iniziali}
         \begin{itemize}
             \item Stabilire i valori iniziali di una risoluzione per BDF non è banale.
@@ -591,10 +584,10 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             \item Si dice \alert{zero stabile} se è in grado di risolvere correttamente \( y'=0 \), cioè per una perturbazione del calcolo all’interno del metodo, la soluzione non diverge
         \end{itemize}
         
-       Facciamo un semplice esempio:
+       Facciamo un semplice esempio (non zero stabile):
         \[u_{n+1} = 5 u_n + u_{n-1}  \textnormal{ con } f = 0\]
         \begin{center}
-         \begin{pmatrix}
+         $\begin{pmatrix}
             u_{n+1} \\ 
             u_{n}
          \end{pmatrix}
@@ -606,10 +599,10 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \begin{pmatrix}
             u_{n} \\ 
             u_{n-1}
-         \end{pmatrix}
+         \end{pmatrix} $
          \end{center}
          \[\vec{u_n} = A \vec{u_{n-1}} = AA \vec{u_{n-2}}= A^{n+1} \vec{u_0} \]
-         \[A = U^ {-1} \Lambda U  \textnormal{ con } \Lambda \textnormal{ matrice contenente gli autovalori} \]
+         \[A = U^ {-1} \Lambda U  \textnormal{ con } \Lambda \textnormal{ matrice contenente gli \alert{autovalori associati al metodo}} \]
          \[AA = (U^ {-1} \Lambda U)(U^ {-1} \Lambda U) = U^{-1} \Lambda (U U^{-1}) \Lambda U = U^{-1} \Lambda \Lambda U \]
          \[A^{n+1} = U^{-1} \Lambda^{n+1} U\]
        % \begin{figure}
@@ -666,15 +659,15 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
     
     \begin{frame}{Zero stabilità e convergenza (II)}
         \begin{itemize}
-            \item Se gli autovalori hanno modulo $>1$, al passo n-esimo la matrice $A^{n+1}$ avrà coefficienti enormi. Nel nostro caso, gli autovalori sono  $0.19258$ e $5.19258$
+            \item \textbf{Se gli autovalori hanno modulo $>1$}, al passo n-esimo $A^{n+1}$ avrà coefficienti enormi. \\ Nel nostro caso, gli autovalori sono  $0.19258$ e \alert{$5.19258$}
             \item Al ventesimo passo, la $A^{n+1}$ sarà: 
             %\[ 1.0e\+14 \]
             \vspace{0.5cm}
             \begin{center}
-                \begin{bmatrix} 
+                \[\begin{bmatrix} 
                 1.958*10^{14} & 0.377*10^{14} \\ 
                 0.377*10^{14} & 0.0726*10^{14}
-                \end{bmatrix} 
+                \end{bmatrix} \]
             \end{center}
             \vspace{0.5cm}
             
@@ -684,15 +677,15 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             %\label{fig:my_label}
             %\end{figure}
             
-            Qualsiasi perturbazione introdotta nel metodo verrà amplificata, anche solo un semplice errore nel valore iniziale.
+            Qualsiasi perturbazione introdotta (anche nei valori iniziali) \textbf{farà divergere il metodo per qualsiasi sistema sotto analisi}.
             \medskip
             \medskip
-            \item La BDF del secondo ordine zero stabile ha autovalori 1 e $1/3$
+            \item Autovalori di BDF2 (zero stabile): $1$ e $1/3$
         \end{itemize} 
     \end{frame}
     
     \begin{frame}{Zero stabilità e convergenza (III)}
-        Concludendo: il metodo è \textbf{zero stabile} se tutte le radici $\xi_i$ (gli autovalori associati al metodo) del polinomio caratteristico $\rho(\xi)$ soddisfano $|\xi_i|\leq1$, in cui 
+        \textbf{Concludendo}: il metodo è \textbf{zero stabile} se tutte le radici $\xi_i$ (autovalori associati al metodo) del polinomio caratteristico $\rho(\xi)$ soddisfano $|\xi_i|\leq1$, in cui 
         $$
             \rho(\xi)=\displaystyle\sum_{j=0}^k \alpha_j\xi^{k-j}
         $$
@@ -757,7 +750,7 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \begin{figure}
         \centering
         \includegraphics[width=.75\linewidth]{order.png}
-        \label{fig:my_label}
+        \label{fig:ordine_interpol}
         \end{figure}
  \end{frame}
  \begin{comment}
@@ -776,17 +769,18 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         $$
     \end{frame}
  \end{comment}
- 
+ \section{Assoluta stabilità}%\label{sec:sec10}
     \begin{frame}{Assoluta stabilità}
         \begin{figure}
         \centering
         \includegraphics[width=.7\linewidth]{fig7.png}
-        \label{fig:my_label}
+        \label{fig:abs_stability}
         \end{figure}
         Per i \textbf{multistep} si analizza la regione di NON stabilità
         \begin{itemize}
-            \item Da BDF3 in poi la risoluzione può eccitare dei modi instabili che faranno \textbf{divergere} la soluzione
-            \item Da BDF7 in poi si \textbf{perde la zero-stabilità}
+            \item Siamo già familiari con la zona di non stabilità di BDF1
+            \item Da BDF3 la risoluzione può eccitare dei modi instabili in $\operatorname{\mathbb{R}e}<0$ che faranno \textbf{divergere} la soluzione
+            \item Da BDF7 si \textbf{perde la zero-stabilità}
         \end{itemize}
     \end{frame}
     
@@ -814,29 +808,37 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \medskip
         \medskip
         \begin{itemize}
-        \item Lo stiff decay è un \alert{indice} che rivela quanto un metodo di risoluzione sia veloce nell’assestarsi alla soluzione di un sistema stiff.\\
-        \item Il vantaggio nell'uso dei metodi con \textit{stiff decay} è la loro capacità di \textbf{trascurare la parte della soluzione che
-        varia velocemente} senza però perdere dettagli nella parte a bassa velocità.
+        \item È un \alert{indice} che rivela quanto un metodo di risoluzione sia veloce nell’assestarsi alla soluzione di un sistema stiff.\\
+        \item I metodi con \textit{stiff decay} \textbf{trascurano la parte della soluzione che
+        varia velocemente} senza perdere dettagli nella parte a bassa velocità.
+        \item I metodi BDF hanno proprietà di stiff decay
         \end{itemize}
         \begin{figure}
-        \includegraphics[width=.4\linewidth]{fig8.png}
         \includegraphics[width=.4\linewidth]{fig9.png}
-        \label{fig:my_label}
+        \includegraphics[width=.4\linewidth]{fig8.png}
+        \label{fig:stiff_decay}
     \end{figure}
         \begin{centering}
-        La soluzione tratteggiata è determinata tramite metodo di Crank-Nicholson, quella continua tramite Eulero implicito
+            Linea tratteggiata $\rightarrow$ \textbf{Crank-Nicholson} \space\space\space Linea continua $\rightarrow$ \textbf{BDF1}\\
         \end{centering}
     \end{frame}
 
-\section{Implementazione}\label{sec:sec12}  
+\section{Circuito RLC: soluzioni con BDF}\label{sec:sec12}  
 
- \begin{frame}{Circuito RLC - soluzioni con BDF}
+ \begin{frame}{Circuito RLC: soluzioni con BDF}
     \begin{figure}
         \centering
-        \includegraphics[width=.8\linewidth]{rlc_solution_comparison.png}
-        \label{fig:my_label}
+        \includegraphics[width=.68\linewidth]{rlc_solution_comparison.png}
+        \label{fig:rlc_bdf_solution}
     \end{figure}
+    
+    \begin{itemize}
+        \item{\makebox[2.5cm]{\textbf{Eulero esplicito}\hfill} $\rightarrow 50*10^3$ passi necessari}
+        \item{\makebox[2.5cm]{\textbf{BDF3}\hfill} $\rightarrow$ \space $1*10^3$ passi necessari (tempo di risoluzione $<1s$)}
+    \end{itemize}
  \end{frame}
+ 
+ 
  \begin{comment}
 \begin{frame}{Priming}
 come risolviamo il priming in matlab
