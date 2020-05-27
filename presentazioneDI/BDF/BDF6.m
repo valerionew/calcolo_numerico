@@ -5,7 +5,9 @@ function y = BDF6(f,t,y0)
 h = diff(t);
 y = zeros(numel(y0),numel(t));
 
-y(:,1:6) = BDF5(f,t(1:6),y0);
+if(size(y0,2)<2)
+    warning("not enough starting values, assuming all zeros");
+end
 
 for ii = 6:numel(t)-1
     BDF6 = @(x) (360/147).*y(:, ii) - (450/147).*y(:,ii-1) + ...
