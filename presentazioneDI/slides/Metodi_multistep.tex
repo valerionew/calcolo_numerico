@@ -82,7 +82,11 @@
     Gear B.
     \newblock Backward Differentiation Formulas (Scholarpedia)
     \newblock \url{http://www.scholarpedia.org/article/Backward_differentiation_formulas}
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
 
    \end{thebibliography}
 
@@ -148,18 +152,30 @@ Analizziamo il circuito attraverso la legge di Kirchhoff delle correnti e quella
         \large
         $\begin{cases}
            \textcolor{Cerulean}{KLV:}  V_{in} = V_L + V_{R1} + V_{out} \\
+<<<<<<< HEAD
            \textcolor{BurntOrange}{KLC:}  I_{in} =  I_{R2} + I_C
+=======
+           \textcolor{BurntOrange}{KLC:}  I_{in} =  I_{R2} + I_C
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
         \end{cases} $
         \medskip\\
         $\begin{cases}
             {x_1} = V_{out}\\
+<<<<<<< HEAD
             {x_2} = I_{in}
+=======
+            {x_2} = I_{in}
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
         \end{cases} $
         \bigskip\\
         Otteniamo il sistema:\medskip\\
         $\begin{cases}
             \dot{x_1} = -\dfrac{1}{L}x_1 - \dfrac{R_1}{L}x_2 + \dfrac{1}{L}V_{in}\\
+<<<<<<< HEAD
             \dot{x_2} = -\dfrac{1}{R_2 C}x_1 + \dfrac{1}{C}x_2
+=======
+            \dot{x_2} = -\dfrac{1}{R_2 C}x_1 + \dfrac{1}{C}x_2
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
         \end{cases}$
         \end{minipage}
     \end{multicols}
@@ -172,6 +188,7 @@ Possiamo riscrivere il sistema ottenuto come matrice:
 \large
 \begin{center}
 \[
+<<<<<<< HEAD
     \begin{bmatrix}
     \dot{x_1} \\
     \dot{x_2} \end{bmatrix}  =
@@ -190,6 +207,26 @@ Possiamo riscrivere il sistema ottenuto come matrice:
     \begin{bmatrix}
     0 \\
     V_{in}
+=======
+    \begin{bmatrix}
+    \dot{x_1} \\
+    \dot{x_2} \end{bmatrix}  =
+    \begin{bmatrix}
+    -\dfrac{1}{L} & - \dfrac{R_1}{L}\\[1.5ex]
+    -\dfrac{1}{R_2C} & + \dfrac{1}{C}
+    \end{bmatrix}
+    \begin{bmatrix}
+    x_1 \\
+    x_2 \end{bmatrix}
+    +
+    \begin{bmatrix}
+    0 \\[1.5ex]
+    -\dfrac{1}{L}
+    \end{bmatrix}
+    \begin{bmatrix}
+    0 \\
+    V_{in}
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
     \end{bmatrix}
 \]
 \end{center}
@@ -217,7 +254,11 @@ Prendiamo in considerazione la matrice dei coefficienti del sistema:
         \medskip
         \item La soluzione libera del sistema sarà una combinazione lineare dei \alert{modi} del sistema: \( e^{\lambda_nt}\)
         \item Per $\lambda$ positivi il sistema diverge per $t \rightarrow \infty $. Chiediamo quindi autovalori con $\operatorname{\mathbb{R}e}(\lambda)<0$
+<<<<<<< HEAD
         \item La soluzione è dominata dall'autovalore \alert{più piccolo}, che individua il polo dominante.
+=======
+        \item La soluzione è dominata dall'autovalore \alert{più piccolo}, che individua il polo dominante.
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
         \item Numericamente non possiamo permetterci di trascurare gli altri autovalori.
 
 
@@ -250,7 +291,11 @@ Prendiamo in considerazione la matrice dei coefficienti del sistema:
         \end{multicols}
 
     \end{frame}
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
 \section{Cosa sono i sistemi Stiff?}\label{sec:sec3}
 \begin{frame} \frametitle{Cosa sono i sistemi Stiff?}
     \begin{itemize}
@@ -415,7 +460,11 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \begin{itemize}
             %\item Richiedono meno valutazioni della funzione per ogni step (rispetto a Runge-Kutta)
             \item Migliore accuratezza rispetto ad altri metodi (es. RK) a parità di numero di valutazioni della funzione
+<<<<<<< HEAD
             \item Metodi costruiti più semplici e performanti in fatto di ordine e stima dell’errore
+=======
+            \item Metodi costruiti più semplici e performanti in fatto di ordine e stima dell’errore
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
             \item Proprietà di stiff decay
             %\item Migliore accuratezza rispetto a metodi one-step a parità di numero di valutazioni della funzione
         \end{itemize}
@@ -532,7 +581,11 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             \begin{tabular}{ScSl}
             BDF1 & \( y_n = y_{n-1} + h f(t_{n}, y_{n})\) \textcolor{red}{\( \rightarrow  y_{n} = -\alpha_1y_{n-1} + \beta_0h f(t_{n}, y_{n})\)}\\
             BDF2 & \(y_{n} = \tfrac43 y_{n-1} - \tfrac13 y_{n-2} + \tfrac23 h f(t_{n}, y_{n}) \) \textcolor{red}{\(\rightarrow y_{n} = -\alpha_1y_{n-1} -\alpha_2y_{n-2} + \beta_0h f(t_{n}, y_{n}) \)}\\
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
             BDF3 & ...\\%\(y_{n+3} = \tfrac{18}{11} y_{n+2} - \tfrac9{11} y_{n+1} + \tfrac2{11} y_n +\tfrac6{11} h f(t_{n+3}, y_{n+3}) \) \\
             BDF4 & ...\\ %\(y_{n+4} = \tfrac{48}{25} y_{n+3} - \tfrac{36}{25} y_{n+2} + \tfrac{16}{25} y_{n+1} - \tfrac{3}{25} y_n + \tfrac{12}{25} h f(t_{n+4}, y_{n+4}) \) \\
             BDF5 & ...\\ %\( y_{n+5} = \tfrac{300}{137} y_{n+4} - \tfrac{300}{137} y_{n+3} + \tfrac{200}{137} y_{n+2} - \tfrac{75}{137} y_{n+1} + \tfrac{12}{137} y_n + \tfrac{60}{137} h f(t_{n+5}, y_{n+5}) \)  \\
@@ -583,12 +636,20 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \begin{itemize}
             \item Si dice \alert{zero stabile} se è in grado di risolvere correttamente \( y'=0 \), cioè per una perturbazione del calcolo all’interno del metodo, la soluzione non diverge
         \end{itemize}
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
        Facciamo un semplice esempio (non zero stabile):
         \[u_{n+1} = 5 u_n + u_{n-1}  \textnormal{ con } f = 0\]
         \begin{center}
          $\begin{pmatrix}
+<<<<<<< HEAD
             u_{n+1} \\
+=======
+            u_{n+1} \\
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
             u_{n}
          \end{pmatrix}
          =
@@ -660,12 +721,21 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
     \begin{frame}{Zero stabilità e convergenza (II)}
         \begin{itemize}
             \item \textbf{Se gli autovalori hanno modulo $>1$}, al passo n-esimo $A^{n+1}$ avrà coefficienti enormi. \\ Nel nostro caso, gli autovalori sono  $0.19258$ e \alert{$5.19258$}
+<<<<<<< HEAD
             \item Al ventesimo passo, la $A^{n+1}$ sarà:
             %\[ 1.0e\+14 \]
             \vspace{0.5cm}
             \begin{center}
                 \[\begin{bmatrix}
                 1.958*10^{14} & 0.377*10^{14} \\
+=======
+            \item Al ventesimo passo, la $A^{n+1}$ sarà:
+            %\[ 1.0e\+14 \]
+            \vspace{0.5cm}
+            \begin{center}
+                \[\begin{bmatrix}
+                1.958*10^{14} & 0.377*10^{14} \\
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
                 0.377*10^{14} & 0.0726*10^{14}
                 \end{bmatrix} \]
             \end{center}
@@ -676,16 +746,28 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
             %\includegraphics[width=.4\linewidth]{fig5.png}
             %\label{fig:my_label}
             %\end{figure}
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
             Qualsiasi perturbazione introdotta (anche nei valori iniziali) \textbf{farà divergere il metodo per qualsiasi sistema sotto analisi}.
             \medskip
             \medskip
             \item Autovalori di BDF2 (zero stabile): $1$ e $1/3$
+<<<<<<< HEAD
         \end{itemize}
+=======
+        \end{itemize}
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
     \end{frame}
 
     \begin{frame}{Zero stabilità e convergenza (III)}
+<<<<<<< HEAD
         \textbf{Concludendo}: il metodo è \textbf{zero stabile} se tutte le radici $\xi_i$ (autovalori associati al metodo) del polinomio caratteristico $\rho(\xi)$ soddisfano $|\xi_i|\leq1$, in cui
+=======
+        \textbf{Concludendo}: il metodo è \textbf{zero stabile} se tutte le radici $\xi_i$ (autovalori associati al metodo) del polinomio caratteristico $\rho(\xi)$ soddisfano $|\xi_i|\leq1$, in cui
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
         $$
             \rho(\xi)=\displaystyle\sum_{j=0}^k \alpha_j\xi^{k-j}
         $$
@@ -823,7 +905,11 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \end{centering}
     \end{frame}
 
+<<<<<<< HEAD
 \section{Circuito RLC: soluzioni con BDF}\label{sec:sec12}
+=======
+\section{Circuito RLC: soluzioni con BDF}\label{sec:sec12}
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
 
  \begin{frame}{Circuito RLC: soluzioni con BDF}
     \begin{figure}
@@ -831,14 +917,23 @@ Se volessimo risolvere il nuovo sistema \alert{stiff}, dovremmo considerare un p
         \includegraphics[width=.68\linewidth]{rlc_solution_comparison.png}
         \label{fig:rlc_bdf_solution}
     \end{figure}
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
     \begin{itemize}
         \item{\makebox[2.5cm]{\textbf{Eulero esplicito}\hfill} $\rightarrow 50*10^3$ passi necessari}
         \item{\makebox[2.5cm]{\textbf{BDF3}\hfill} $\rightarrow$ \space $1*10^3$ passi necessari (tempo di risoluzione $<1s$)}
     \end{itemize}
  \end{frame}
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> 12a297c... aggiornate slides, rimosso submodule
  \begin{comment}
 \begin{frame}{Priming}
 come risolviamo il priming in matlab
