@@ -24,7 +24,11 @@ jobs:
           git config --local user.email "${{ secrets.MY_EMAIL }}"
           git config --local user.name "${{ secrets.MY_NAME }}"
           git add -f ./presentazioneDI/slides/Metodi_multistep.pdf
+<<<<<<< HEAD
           git commit -m "[ROBOT] Slides compilate automaticamente"
+=======
+          git commit -m "Slides compilate automaticamente"
+>>>>>>> ece42ba... Update slidesDI.yml
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
